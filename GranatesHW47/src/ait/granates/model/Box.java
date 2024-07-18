@@ -34,25 +34,25 @@ public class Box implements Iterable<Pomegranate> {
     }
 
     public int countSeeds() {
-        int totalCount = 0;
-        for (Pomegranate pomegranate : granates) {
-            totalCount += pomegranate.countSeeds();
-        }
-        return totalCount;
-//        return granates.stream()
-//                .mapToInt(Pomegranate::countSeeds)
-//                .sum();
+//        int totalCount = 0;
+//        for (Pomegranate pomegranate : granates) {
+//            totalCount += pomegranate.countSeeds();
+//        }
+//        return totalCount;
+        return granates.stream()
+                .mapToInt(Pomegranate::countSeeds)
+                .sum();
     }
 
     public double totalWeight() {
-        double totalWeight = 0.0;
-        for (Pomegranate pomegranate : granates) {
-            totalWeight += pomegranate.totalWeightSeeds();
-        }
-        return totalWeight;
-//        return granates.stream()
-//                .mapToDouble(Pomegranate::totalWeightSeeds)
-//                .sum();
+//        double totalWeight = 0.0;
+//        for (Pomegranate pomegranate : granates) {
+//            totalWeight += pomegranate.totalWeightSeeds();
+//        }
+//        return totalWeight;
+        return granates.stream()
+                .mapToDouble(Pomegranate::totalWeightSeeds)
+                .sum();
     }
 
     @Override
