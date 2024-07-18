@@ -38,19 +38,33 @@ public class PomegranateAppl {
 
         System.out.println("Total weight in all boxes= " + doubleTotalWeight.getSum());
 
-        System.out.println("=== Find names of boxes with maximum seeds ===");
         Iterable<Box> boxesSeeds = boxes.stream()
                 .collect(Collectors.toList());
+
+        System.out.println("=== Find names of boxes with maximum seeds ===");
         StreamSupport.stream(boxesSeeds.spliterator(), false)
                 .filter(box -> box.countSeeds() == intCountSeeds.getMax())
                 .map(Box::getName)
                 .forEach(System.out::println);
 
-        System.out.println("=== Find names of boxes with minimum weight ===");
+        System.out.println("=== Find names of boxes with minimum seeds ===");
+        StreamSupport.stream(boxesSeeds.spliterator(), false)
+                .filter(box -> box.countSeeds() == intCountSeeds.getMin())
+                .map(Box::getName)
+                .forEach(System.out::println);
+
         Iterable<Box> boxesWeight = boxes.stream()
                 .collect(Collectors.toList());
+
+        System.out.println("=== Find names of boxes with minimum weight ===");
         StreamSupport.stream(boxesWeight.spliterator(), false)
                 .filter(box -> box.totalWeight() == doubleTotalWeight.getMin())
+                .map(Box::getName)
+                .forEach(System.out::println);
+
+        System.out.println("=== Find names of boxes with maximum weight ===");
+        StreamSupport.stream(boxesWeight.spliterator(), false)
+                .filter(box -> box.totalWeight() == doubleTotalWeight.getMax())
                 .map(Box::getName)
                 .forEach(System.out::println);
     }
