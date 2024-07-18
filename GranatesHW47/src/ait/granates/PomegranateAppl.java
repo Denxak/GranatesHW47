@@ -22,23 +22,57 @@ public class PomegranateAppl {
                 .collect(Collectors.toList());
 
         System.out.println("=== Calculate total seeds in all boxes ===");
-        int total = boxes.stream()
+        int totalSeedsAll = boxes.stream()
                 .mapToInt(Box::countSeeds)
                 .sum();
-        System.out.println("Total = " + total);
+        System.out.println("Total = " + totalSeedsAll);
 
         System.out.println("=== Calculate maximum seeds in one box ===");
-        int max = boxes.stream()
+        int maxSeedsOneBox = boxes.stream()
                 .mapToInt(Box::countSeeds)
                 .max()
                 .orElse(0);
-        System.out.println("Max = " + max);
+        System.out.println("Max = " + maxSeedsOneBox);
+
+        System.out.println("=== Calculate minimum seeds in one box ===");
+        int minSeedsOneBox = boxes.stream()
+                .mapToInt(Box::countSeeds)
+                .min()
+                .orElse(0);
+        System.out.println("Max = " + minSeedsOneBox);
+
+        System.out.println("=== Calculate maximum weight in one box ===");
+        double totalMaxWeightOneBox = boxes.stream()
+                .mapToDouble(Box::totalWeight)
+                .max()
+                .orElse(0);
+        System.out.println("Max = " + totalMaxWeightOneBox);
+
+        System.out.println("=== Calculate minimum weight in one box ===");
+        double totalMinWeightOneBox = boxes.stream()
+                .mapToDouble(Box::totalWeight)
+                .min()
+                .orElse(0);
+        System.out.println("Max = " + totalMinWeightOneBox);
+
+        System.out.println("=== Calculate total weight in all boxes ===");
+        double totalWeidhtAll = boxes.stream()
+                .mapToDouble(Box::totalWeight)
+                .sum();
+        System.out.println("Total = " + totalWeidhtAll);
 
         System.out.println("=== Find names of boxes with maximum seeds ===");
-        List<String> boxesWithMaximumSeeds = boxes.stream()
-                .filter(box -> box.countSeeds() == max)
+        List<String> boxesWithMaxSeeds = boxes.stream()
+                .filter(box -> box.countSeeds() == maxSeedsOneBox)
                 .map(Box::getName)
                 .collect(Collectors.toList());
-        boxesWithMaximumSeeds.forEach(System.out::println);
+        boxesWithMaxSeeds.forEach(System.out::println);
+
+        System.out.println("=== Find names of boxes with minimum weight ===");
+        List<String> boxesWithMimWeight = boxes.stream()
+                .filter(box -> box.totalWeight() == totalMinWeightOneBox)
+                .map(Box::getName)
+                .collect(Collectors.toList());
+        boxesWithMimWeight.forEach(System.out::println);
     }
 }
