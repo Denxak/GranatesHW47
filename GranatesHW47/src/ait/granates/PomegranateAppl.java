@@ -2,11 +2,10 @@ package ait.granates;
 
 import ait.granates.model.Box;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import static ait.granates.Constants.*;
 
@@ -21,58 +20,38 @@ public class PomegranateAppl {
                 .mapToObj(b -> new Box("NameBox" + (b)))
                 .collect(Collectors.toList());
 
-        System.out.println("=== Calculate total seeds in all boxes ===");
-        int totalSeedsAll = boxes.stream()
+        IntSummaryStatistics intCountSeeds = boxes.stream()
                 .mapToInt(Box::countSeeds)
-                .sum();
-        System.out.println("Total = " + totalSeedsAll);
+                .summaryStatistics();
+        System.out.println("Total seeds in all boxes = " + intCountSeeds.getSum());
 
-        System.out.println("=== Calculate maximum seeds in one box ===");
-        int maxSeedsOneBox = boxes.stream()
-                .mapToInt(Box::countSeeds)
-                .max()
-                .orElse(0);
-        System.out.println("Max = " + maxSeedsOneBox);
+        System.out.println("Max seeds in one box = " + intCountSeeds.getMax());
 
-        System.out.println("=== Calculate minimum seeds in one box ===");
-        int minSeedsOneBox = boxes.stream()
-                .mapToInt(Box::countSeeds)
-                .min()
-                .orElse(0);
-        System.out.println("Max = " + minSeedsOneBox);
+        System.out.println("Min seeds in one box = " + intCountSeeds.getMin());
 
-        System.out.println("=== Calculate maximum weight in one box ===");
-        double totalMaxWeightOneBox = boxes.stream()
+        DoubleSummaryStatistics doubleTotalWeight = boxes.stream()
                 .mapToDouble(Box::totalWeight)
-                .max()
-                .orElse(0);
-        System.out.println("Max = " + totalMaxWeightOneBox);
+                .summaryStatistics();
+        System.out.println("Max weight in one box = " + doubleTotalWeight.getMax());
 
-        System.out.println("=== Calculate minimum weight in one box ===");
-        double totalMinWeightOneBox = boxes.stream()
-                .mapToDouble(Box::totalWeight)
-                .min()
-                .orElse(0);
-        System.out.println("Max = " + totalMinWeightOneBox);
+        System.out.println("Min weight in one box = " + doubleTotalWeight.getMin());
 
-        System.out.println("=== Calculate total weight in all boxes ===");
-        double totalWeidhtAll = boxes.stream()
-                .mapToDouble(Box::totalWeight)
-                .sum();
-        System.out.println("Total = " + totalWeidhtAll);
+        System.out.println("Total weight in all boxes= " + doubleTotalWeight.getSum());
 
         System.out.println("=== Find names of boxes with maximum seeds ===");
-        List<String> boxesWithMaxSeeds = boxes.stream()
-                .filter(box -> box.countSeeds() == maxSeedsOneBox)
-                .map(Box::getName)
+        Iterable<Box> boxesSeeds = boxes.stream()
                 .collect(Collectors.toList());
-        boxesWithMaxSeeds.forEach(System.out::println);
+        StreamSupport.stream(boxesSeeds.spliterator(), false)
+                .filter(box -> box.countSeeds() == intCountSeeds.getMax())
+                .map(Box::getName)
+                .forEach(System.out::println);
 
         System.out.println("=== Find names of boxes with minimum weight ===");
-        List<String> boxesWithMimWeight = boxes.stream()
-                .filter(box -> box.totalWeight() == totalMinWeightOneBox)
-                .map(Box::getName)
+        Iterable<Box> boxesWeight = boxes.stream()
                 .collect(Collectors.toList());
-        boxesWithMimWeight.forEach(System.out::println);
+        StreamSupport.stream(boxesWeight.spliterator(), false)
+                .filter(box -> box.totalWeight() == doubleTotalWeight.getMin())
+                .map(Box::getName)
+                .forEach(System.out::println);
     }
 }
