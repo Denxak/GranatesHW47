@@ -32,14 +32,14 @@ public class Pomegranate implements Iterable<Seed> {
     }
 
     public double totalWeightSeeds() {
-        double totalWeight = 0.0;
-        for (Seed seed : seeds) {
-            totalWeight += seed.getWeight();
-        }
-        return totalWeight;
-//      return seeds.stream()
-//                .mapToDouble(Seed::getWeight)
-//                .sum();
+//        double totalWeight = 0.0;
+//        for (Seed seed : seeds) {
+//            totalWeight += seed.getWeight();
+//        }
+//        return totalWeight;
+      return seeds.stream()
+                .mapToDouble(Seed::getWeight)
+                .sum();
     }
 
     @Override
